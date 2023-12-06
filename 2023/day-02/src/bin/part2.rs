@@ -2,7 +2,10 @@ use std::fs::File;
 use std::io::{BufRead, BufReader};
 
 fn get_int_from_string(string: &str) -> i32 {
-    let digits: String = string.chars().filter(|char| char.is_digit(10)).collect();
+    let digits: String = string
+        .chars()
+        .filter(|char| char.is_ascii_digit())
+        .collect();
     digits.parse().unwrap()
 }
 
@@ -14,7 +17,7 @@ fn check_if_possible(game_line: &str) -> i32 {
     for game in games_list.into_iter() {
         let entries = game.split(',');
         for entry in entries.into_iter() {
-            let number_of_color = get_int_from_string(&entry);
+            let number_of_color = get_int_from_string(entry);
 
             let over_red = entry.contains("red") && number_of_color > 12;
             let over_green = entry.contains("green") && number_of_color > 13;
